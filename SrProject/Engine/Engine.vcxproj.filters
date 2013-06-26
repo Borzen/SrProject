@@ -1,17 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{0a236f98-9d69-4671-8da7-00f0bc37fabe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="Engine\Graphics Classes">
+      <UniqueIdentifier>{af628b45-0d35-40bd-be15-fcfbfc637afc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Engine\Graphics Classes\Terrain">
+      <UniqueIdentifier>{cccc9fcf-d07d-4825-aafd-8c19b1e68098}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Graphics Classes\Model">
+      <UniqueIdentifier>{96a971cb-6ee8-4def-b2b4-b6d83e1e5389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\HLSL">
+      <UniqueIdentifier>{35fa806b-a342-45de-8469-1a08cd98daa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Input Classes">
+      <UniqueIdentifier>{1dff2e7c-0c51-4d17-8e00-8887119afbc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\System Stuff">
+      <UniqueIdentifier>{4d225ef1-8724-43a1-a0c2-cada68b51867}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="InputClass.cpp">
+      <Filter>Engine\Input Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemClass.cpp">
+      <Filter>Engine\System Stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DClass.cpp">
+      <Filter>Engine\Graphics Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsClass.cpp">
+      <Filter>Engine\Graphics Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelClass.cpp">
+      <Filter>Engine\Graphics Classes\Model</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="InputClass.h">
+      <Filter>Engine\Input Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemClass.h">
+      <Filter>Engine\System Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DClass.h">
+      <Filter>Engine\Graphics Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsClass.h">
+      <Filter>Engine\Graphics Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelClass.h">
+      <Filter>Engine\Graphics Classes\Model</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
