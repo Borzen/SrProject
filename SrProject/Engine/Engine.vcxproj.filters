@@ -13,14 +13,29 @@
     <Filter Include="Engine\Graphics Classes\Model">
       <UniqueIdentifier>{96a971cb-6ee8-4def-b2b4-b6d83e1e5389}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\HLSL">
-      <UniqueIdentifier>{35fa806b-a342-45de-8469-1a08cd98daa7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Input Classes">
       <UniqueIdentifier>{1dff2e7c-0c51-4d17-8e00-8887119afbc6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\System Stuff">
       <UniqueIdentifier>{4d225ef1-8724-43a1-a0c2-cada68b51867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics Classes\Shaders">
+      <UniqueIdentifier>{0a628056-0747-4ebb-999d-9945adec4705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Camera">
+      <UniqueIdentifier>{b478aff9-27d9-4a5d-8903-304b5de0c755}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics Classes\Texture">
+      <UniqueIdentifier>{0410344d-ec58-4b14-97cd-9a456a86f40a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics Classes\Light">
+      <UniqueIdentifier>{e9806509-7b74-4666-b7d7-121b477307d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics Classes\Text">
+      <UniqueIdentifier>{ab249d36-132d-48f6-8e32-39f861313e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Sound">
+      <UniqueIdentifier>{161280ba-2f5f-4022-b9a4-a367fe1fe4e7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +57,36 @@
     <ClCompile Include="ModelClass.cpp">
       <Filter>Engine\Graphics Classes\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Colorshaderclass.cpp">
+      <Filter>Engine\Graphics Classes\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Cameraclass.cpp">
+      <Filter>Engine\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="textureclass.cpp">
+      <Filter>Engine\Graphics Classes\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="textureshaderclass.cpp">
+      <Filter>Engine\Graphics Classes\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="lightshaderclass.cpp">
+      <Filter>Engine\Graphics Classes\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="lightclass.cpp">
+      <Filter>Engine\Graphics Classes\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="fontclass.cpp">
+      <Filter>Engine\Graphics Classes\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="fontshaderclass.cpp">
+      <Filter>Engine\Graphics Classes\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="textclass.cpp">
+      <Filter>Engine\Graphics Classes\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="soundclass.cpp">
+      <Filter>Engine\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InputClass.h">
@@ -58,6 +103,36 @@
     </ClInclude>
     <ClInclude Include="ModelClass.h">
       <Filter>Engine\Graphics Classes\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Colorshaderclass.h">
+      <Filter>Engine\Graphics Classes\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Cameraclass.h">
+      <Filter>Engine\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="textureclass.h">
+      <Filter>Engine\Graphics Classes\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="textureshaderclass.h">
+      <Filter>Engine\Graphics Classes\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="lightshaderclass.h">
+      <Filter>Engine\Graphics Classes\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="lightclass.h">
+      <Filter>Engine\Graphics Classes\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="fontclass.h">
+      <Filter>Engine\Graphics Classes\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="fontshaderclass.h">
+      <Filter>Engine\Graphics Classes\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="textclass.h">
+      <Filter>Engine\Graphics Classes\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="soundclass.h">
+      <Filter>Engine\Sound</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
