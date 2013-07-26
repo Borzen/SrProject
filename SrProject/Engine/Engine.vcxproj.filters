@@ -37,6 +37,15 @@
     <Filter Include="Engine\Sound">
       <UniqueIdentifier>{161280ba-2f5f-4022-b9a4-a367fe1fe4e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Graphics Classes\SceneGraph">
+      <UniqueIdentifier>{bd163780-2580-49f5-ae0f-3a40317d745e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Timer">
+      <UniqueIdentifier>{5ada885d-34e2-4017-847d-2c513dcb6841}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Diag Classes">
+      <UniqueIdentifier>{8d951033-6172-4a43-aa72-1af711e7a87e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputClass.cpp">
@@ -87,6 +96,33 @@
     <ClCompile Include="soundclass.cpp">
       <Filter>Engine\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="frustumclass.cpp">
+      <Filter>Engine\Graphics Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="modellistclass.cpp">
+      <Filter>Engine\Graphics Classes\SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="positionclass.cpp">
+      <Filter>Engine\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="timerclass.cpp">
+      <Filter>Engine\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="fpsclass.cpp">
+      <Filter>Engine\Diag Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="cpuclass.cpp">
+      <Filter>Engine\Diag Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="multitextureshaderclass.cpp">
+      <Filter>Engine\Graphics Classes\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="texturearrayclass.cpp">
+      <Filter>Engine\Graphics Classes\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="lightmapshaderclass.cpp">
+      <Filter>Engine\Graphics Classes\Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InputClass.h">
@@ -133,6 +169,33 @@
     </ClInclude>
     <ClInclude Include="soundclass.h">
       <Filter>Engine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="frustumclass.h">
+      <Filter>Engine\Graphics Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="modellistclass.h">
+      <Filter>Engine\Graphics Classes\SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="positionclass.h">
+      <Filter>Engine\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="timerclass.h">
+      <Filter>Engine\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="fpsclass.h">
+      <Filter>Engine\Diag Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="cpuclass.h">
+      <Filter>Engine\Diag Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="multitextureshaderclass.h">
+      <Filter>Engine\Graphics Classes\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="texturearrayclass.h">
+      <Filter>Engine\Graphics Classes\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="lightmapshaderclass.h">
+      <Filter>Engine\Graphics Classes\Light</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -14,6 +14,10 @@
 #include "lightshaderclass.h"
 #include "lightclass.h"
 #include "textclass.h"
+#include "frustumclass.h"
+#include "modellistclass.h"
+#include "multitextureshaderclass.h"
+#include "lightmapshaderclass.h"
 
 /////////////
 // GLOBALS //
@@ -36,10 +40,8 @@ public:
 
 	bool Initialize(int, int, HWND);
 	void Shutdown();
-	bool Frame(int,int);
-
-private:
-	bool Render(float);
+	bool Frame(float, int, int, float);
+	bool Render();
 
 private:
 	D3DClass* m_D3D;
@@ -48,6 +50,10 @@ private:
 	LightShaderClass* m_LightShader;
 	LightClass* m_Light;
 	TextClass* m_Text;
+	ModelListClass* m_ModelList;
+	FrustumClass* m_Frustum;
+	MultiTextureShaderClass* m_MultiTextureShader;
+	LightMapShaderClass* m_LightMapShader;
 };
 
 #endif

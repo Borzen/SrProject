@@ -27,6 +27,8 @@ public:
 
 	bool IsEscapePressed();
 	void GetMouseLocation(int&,int&);
+	bool IsLeftArrowPressed();
+	bool IsRightArrowPressed();
 
 private:
 	bool ReadKeyboard();

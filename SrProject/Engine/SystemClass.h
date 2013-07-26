@@ -20,9 +20,13 @@
 ///////////////////////
 // MY CLASS INCLUDES //
 ///////////////////////
+#include "timerclass.h"
 #include "inputclass.h"
 #include "graphicsclass.h"
+#include "fpsclass.h"
+#include "cpuclass.h"
 #include "soundclass.h"
+#include "positionclass.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class name: SystemClass
@@ -53,6 +57,10 @@ private:
 	InputClass* m_Input;
 	GraphicsClass* m_Graphics;
 	SoundClass* m_Sound;
+	TimerClass* m_Timer;
+	FpsClass* m_Fps;
+	CpuClass* m_Cpu;
+	PositionClass* m_Position;
 };
 
 
