@@ -16,6 +16,7 @@ GraphicsClass::GraphicsClass()
 	m_Frustum = 0;
 	m_MultiTextureShader = 0;
 	m_LightMapShader = 0;
+	m_TextureShader = 0;
 }
 
 
@@ -84,8 +85,9 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the model object.
-	result = m_Model->Initialize(m_D3D->GetDevice(), "../Engine/Models/square.txt", L"../Engine/Textures/stone01.dds", 
-				     L"../Engine/Textures/light01.dds");
+	
+	//m_Model->SetInstance(5,NULL);
+	result = m_Model->Initialize(m_D3D->GetDevice(),"../Engine/Models/cube.txt", L"../Engine/Textures/seafloor.dds", false);
 	if(!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -173,12 +175,35 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
+	// Create the texture shader object.
+	m_TextureShader = new TextureShaderClass;
+	if(!m_TextureShader)
+	{
+		return false;
+	}
+
+	// Initialize the texture shader object.
+	result = m_TextureShader->Initialize(m_D3D->GetDevice(), hwnd);
+	if(!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the texture shader object.", L"Error", MB_OK);
+		return false;
+	}
+
 	return true;
 }
 
 
 void GraphicsClass::Shutdown()
 {
+	// Release the texture shader object.
+	if(m_TextureShader)
+	{
+		m_TextureShader->Shutdown();
+		delete m_TextureShader;
+		m_TextureShader = 0;
+	}
+
 	// Release the light map shader object.
 	if(m_LightMapShader)
 	{
@@ -273,11 +298,8 @@ bool GraphicsClass::Frame(float rotationY, int fps, int cpu, float frameTime)
 
 bool GraphicsClass::Render()
 {
-	D3DXMATRIX worldMatrix, viewMatrix, projectionMatrix, orthoMatrix;
-	int modelCount, renderCount, index;
-	float positionX, positionY, positionZ, radius;
-	D3DXVECTOR4 color;
-	bool renderModel, result;
+D3DXMATRIX worldMatrix, viewMatrix, projectionMatrix;
+	bool result;
 
 
 	// Clear the buffers to begin the scene.
@@ -290,81 +312,23 @@ bool GraphicsClass::Render()
 	m_Camera->GetViewMatrix(viewMatrix);
 	m_D3D->GetWorldMatrix(worldMatrix);
 	m_D3D->GetProjectionMatrix(projectionMatrix);
-	m_D3D->GetOrthoMatrix(orthoMatrix);
 
-	// Construct the frustum.
-	//m_Frustum->ConstructFrustum(SCREEN_DEPTH, projectionMatrix, viewMatrix);
-
-	//// Get the number of models that will be rendered.
-	//modelCount = m_ModelList->GetModelCount();
-
-	//// Initialize the count of models that have been rendered.
-	//renderCount = 0;
-
-	//// Go through all the models and render them only if they can be seen by the camera view.
-	//for(index=0; index<modelCount; index++)
-	//{
-	//	// Get the position and color of the sphere model at this index.
-	//	m_ModelList->GetData(index, positionX, positionY, positionZ, color);
-
-	//	// Set the radius of the sphere to 1.0 since this is already known.
-	//	radius = 1.0f;
-
-	//	// Check if the sphere model is in the view frustum.
-	//	renderModel = m_Frustum->CheckSphere(positionX, positionY, positionZ, radius);
-
-	//	// If it can be seen then render it, if not skip this model and check the next sphere.
-	//	if(renderModel)
-	//	{
-	//		// Move the model to the location it should be rendered at.
-	//		D3DXMatrixTranslation(&worldMatrix, positionX, positionY, positionZ); 
-
-	//		// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	//		m_Model->Render(m_D3D->GetDeviceContext());
-
-	//		// Render the model using the light shader.
-	//		m_LightShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, 
-	//				      m_Model->GetTexture(), m_Light->GetDirection(), color);
-
-	//		// Reset to the original world matrix.
-	//		m_D3D->GetWorldMatrix(worldMatrix);
-
-	//		// Since this model was rendered then increase the count for this frame.
-	//		renderCount++;
-	//	}
-	//}
-
+	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Model->Render(m_D3D->GetDeviceContext());
-
-	// Render the model using the light map shader.
-	m_LightMapShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
-				 m_Model->GetTextureArray());
-
-		// Set the number of models that was actually rendered this frame.
-	result = m_Text->SetRenderCount(1, m_D3D->GetDeviceContext());
+	
+	// Render the model using the texture shader.
+	if(m_Model->instanceRender()){
+	result = m_TextureShader->Render(m_D3D->GetDeviceContext(), m_Model->GetVertexCount(), m_Model->GetInstanceCount(), worldMatrix, viewMatrix, 
+					 projectionMatrix, m_Model->GetTexture());
+	}
+	else{
+			result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, 
+				       m_Model->GetTexture(), m_Light->GetDirection(), m_Light->GetDiffuseColor());
+	}
 	if(!result)
 	{
 		return false;
 	}
-
-	// Turn off the Z buffer to begin all 2D rendering.
-	m_D3D->TurnZBufferOff();
-
-	// Turn on the alpha blending before rendering the text.
-	m_D3D->TurnOnAlphaBlending();
-
-	// Render the text string of the render count.
-	m_Text->Render(m_D3D->GetDeviceContext(), worldMatrix, orthoMatrix);
-	if(!result)
-	{
-		return false;
-	}
-
-	// Turn off alpha blending after rendering the text.
-	m_D3D->TurnOffAlphaBlending();
-
-	// Turn the Z buffer back on now that all 2D rendering has completed.
-	m_D3D->TurnZBufferOn();
 
 	// Present the rendered scene to the screen.
 	m_D3D->EndScene();

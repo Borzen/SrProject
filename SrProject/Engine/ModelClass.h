@@ -42,17 +42,33 @@ private:
 
 	};
 
+	struct InstancePos
+	{
+		float x,y,z;
+	};
+
+	struct InstanceType
+	{
+		D3DXVECTOR3 position;
+	};
+
 public:
 	ModelClass();
 	ModelClass(const ModelClass&);
 	~ModelClass();
 
-	bool Initialize(ID3D11Device*, char*, WCHAR*);
-	bool Initialize(ID3D11Device*, char*, WCHAR*, WCHAR*);
+	bool Initialize(ID3D11Device*,WCHAR*,bool);
+	bool Initialize(ID3D11Device*, char*, WCHAR*,bool);
+	bool Initialize(ID3D11Device*, char*, WCHAR*, WCHAR*,bool);
 	void Shutdown();
 	void Render(ID3D11DeviceContext*);
 
+	void SetInstance(int, D3DXVECTOR3*);
+	bool instanceRender();
+
 	int GetIndexCount();
+	int GetVertexCount();
+	int GetInstanceCount();
 	ID3D11ShaderResourceView* GetTexture();
 	ID3D11ShaderResourceView** GetTextureArray();
 
@@ -72,11 +88,13 @@ private:
 	void ReleaseModel();
 
 private:
-	ID3D11Buffer *m_vertexBuffer, *m_indexBuffer;
-	int m_vertexCount, m_indexCount;
+	ID3D11Buffer *m_vertexBuffer, *m_indexBuffer, *m_instanceBuffer;
+	int m_vertexCount, m_indexCount, m_instanceCount;
 	TextureClass* m_Texture;
 	TextureArrayClass* m_TextureArray;
 	ModelType* m_model;
+	InstancePos* m_instancePos;
+	bool isInstance, fromFile;
 };
 
 #endif
