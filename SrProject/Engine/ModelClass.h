@@ -95,6 +95,7 @@ private:
 	ModelType* m_model;
 	InstancePos* m_instancePos;
 	bool isInstance, fromFile;
+	D3DXMATRIX pos;
 };
 
 #endif

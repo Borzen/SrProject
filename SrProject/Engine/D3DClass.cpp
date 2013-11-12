@@ -591,3 +591,10 @@ void D3DClass::TurnOffAlphaBlending()
 
 	return;
 }
+
+void D3DClass::GetVideoCardInfo(char* cardName, int& memory)
+{
+	strcpy_s(cardName, 128, m_videoCardDescription);
+	memory = m_videoCardMemory;
+	return;
+}

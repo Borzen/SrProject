@@ -8,10 +8,9 @@ GraphicsClass::GraphicsClass()
 {
 	m_D3D = 0;
 	m_Camera = 0;
-	m_Model = 0;
+	m_SceneGraph = new SceneGraph;
 	m_LightShader = 0;
 	m_Light = 0;
-	m_Text = 0;
 	m_ModelList = 0;
 	m_Frustum = 0;
 	m_MultiTextureShader = 0;
@@ -62,37 +61,9 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	m_Camera->Render();
 	m_Camera->GetViewMatrix(baseViewMatrix);
 	
-	// Create the text object.
-	m_Text = new TextClass;
-	if(!m_Text)
-	{
-		return false;
-	}
-
-	// Initialize the text object.
-	result = m_Text->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), hwnd, screenWidth, screenHeight, baseViewMatrix);
-	if(!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the text object.", L"Error", MB_OK);
-		return false;
-	}
-
-	// Create the model object.
-	m_Model = new ModelClass;
-	if(!m_Model)
-	{
-		return false;
-	}
-
-	// Initialize the model object.
 	
 	//m_Model->SetInstance(5,NULL);
-	result = m_Model->Initialize(m_D3D->GetDevice(),"../Engine/Models/cube.txt", L"../Engine/Textures/seafloor.dds", false);
-	if(!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
-		return false;
-	}
+	m_SceneGraph->Add(m_D3D->GetDevice(),"../Engine/Models/cube.txt", L"../Engine/Textures/seafloor.dds",0,0,0,0);
 
 	// Create the multitexture shader object.
 	m_MultiTextureShader = new MultiTextureShaderClass;
@@ -234,11 +205,6 @@ void GraphicsClass::Shutdown()
 		m_ModelList = 0;
 	}
 
-	if(m_Text){
-		m_Text->Shutdown();
-		delete m_Text;
-		m_Text = 0;
-	}
 
 	// Release the light object.
 	if(m_Light)
@@ -263,6 +229,10 @@ void GraphicsClass::Shutdown()
 		m_Model = 0;
 	}
 
+	if(m_SceneGraph)
+	{
+		delete m_SceneGraph;
+	}
 	// Release the camera object.
 	if(m_Camera)
 	{
@@ -286,52 +256,11 @@ bool GraphicsClass::Frame(float rotationY, int fps, int cpu, float frameTime)
 {
 	bool result;
 
-	// Set the position of the camera.
-	m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
-
-	// Set the rotation of the camera.
-	m_Camera->SetRotation(0.0f, rotationY, 0.0f);
-
 	return true;
 }
 
 
 bool GraphicsClass::Render()
 {
-D3DXMATRIX worldMatrix, viewMatrix, projectionMatrix;
-	bool result;
-
-
-	// Clear the buffers to begin the scene.
-	m_D3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
-
-	// Generate the view matrix based on the camera's position.
-	m_Camera->Render();
-
-	// Get the world, view, and projection matrices from the camera and d3d objects.
-	m_Camera->GetViewMatrix(viewMatrix);
-	m_D3D->GetWorldMatrix(worldMatrix);
-	m_D3D->GetProjectionMatrix(projectionMatrix);
-
-	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	m_Model->Render(m_D3D->GetDeviceContext());
-	
-	// Render the model using the texture shader.
-	if(m_Model->instanceRender()){
-	result = m_TextureShader->Render(m_D3D->GetDeviceContext(), m_Model->GetVertexCount(), m_Model->GetInstanceCount(), worldMatrix, viewMatrix, 
-					 projectionMatrix, m_Model->GetTexture());
-	}
-	else{
-			result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, 
-				       m_Model->GetTexture(), m_Light->GetDirection(), m_Light->GetDiffuseColor());
-	}
-	if(!result)
-	{
-		return false;
-	}
-
-	// Present the rendered scene to the screen.
-	m_D3D->EndScene();
-
-	return true;
+	return m_SceneGraph->Render(m_D3D,m_TextureShader,m_LightShader,m_Camera,m_Light,NULL);
 }

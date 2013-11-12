@@ -19,6 +19,7 @@
 #include "multitextureshaderclass.h"
 #include "lightmapshaderclass.h"
 #include "textureshaderclass.h"
+#include "scenegraph.h"
 
 /////////////
 // GLOBALS //
@@ -56,6 +57,7 @@ private:
 	MultiTextureShaderClass* m_MultiTextureShader;
 	LightMapShaderClass* m_LightMapShader;
 	TextureShaderClass* m_TextureShader;
+	SceneGraph* m_SceneGraph;
 };
 
 #endif

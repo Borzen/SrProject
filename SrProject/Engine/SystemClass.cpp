@@ -119,6 +119,7 @@ bool SystemClass::Initialize()
 	{
 		return false;
 	}
+
 	
 	return true;
 }
@@ -236,11 +237,12 @@ void SystemClass::Run()
 bool SystemClass::Frame()
 {
 	bool keyDown, result;
-	float rotationY;
+	float rotationX, rotationY, rotationZ;
 
 	m_Timer->Frame();
 	m_Fps->Frame();
 	m_Cpu->Frame();
+
 
 	// Check if the user pressed escape and wants to exit the application.
 	result = m_Input->Frame();
@@ -251,16 +253,18 @@ bool SystemClass::Frame()
 
 	m_Position->SetFrameTime(m_Timer->GetTime());
 
-	keyDown = m_Input->IsLeftArrowPressed();
+	keyDown = m_Input->IsLeftPressed();
 	m_Position->TurnLeft(keyDown);
 
-	keyDown = m_Input->IsRightArrowPressed();
+	keyDown = m_Input->IsRightPressed();
 	m_Position->TurnRight(keyDown);
 
 	// Get the current view point rotation.
-	m_Position->GetRotation(rotationY);
+	m_Position->GetRotation(rotationX,rotationY,rotationZ);
 
 	// Do the frame processing for the graphics object.
+
+
 	result = m_Graphics->Frame(rotationY, m_Fps->GetFps(), m_Cpu->GetCpuPercentage(), m_Timer->GetTime());
 	if(!result)
 	{

@@ -25,10 +25,17 @@ public:
 	void Shutdown();
 	bool Frame();
 
+
 	bool IsEscapePressed();
+	bool IsLeftPressed();
+	bool IsRightPressed();
+	bool IsUpPressed();
+	bool IsDownPressed();
+	bool IsAPressed();
+	bool IsZPressed();
+	bool IsPgUpPressed();
+	bool IsPgDownPressed();
 	void GetMouseLocation(int&,int&);
-	bool IsLeftArrowPressed();
-	bool IsRightArrowPressed();
 
 private:
 	bool ReadKeyboard();

@@ -151,7 +151,6 @@ void ModelClass::SetInstance(int num, D3DXVECTOR3* pos){
 	m_instanceCount = num;
 }
 
-
 ID3D11ShaderResourceView** ModelClass::GetTextureArray()
 {
 	return m_TextureArray->GetTextureArray();
