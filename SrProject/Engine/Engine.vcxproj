@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="applicationclass.cpp" />
     <ClCompile Include="Cameraclass.cpp" />
     <ClCompile Include="Colorshaderclass.cpp" />
     <ClCompile Include="cpuclass.cpp" />
@@ -34,6 +33,7 @@
     <ClCompile Include="soundclass.cpp" />
     <ClCompile Include="SystemClass.cpp" />
     <ClCompile Include="terrainclass.cpp" />
+    <ClCompile Include="Terrainshader.cpp" />
     <ClCompile Include="textclass.cpp" />
     <ClCompile Include="texturearrayclass.cpp" />
     <ClCompile Include="textureclass.cpp" />
@@ -41,7 +41,6 @@
     <ClCompile Include="timerclass.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="applicationclass.h" />
     <ClInclude Include="Cameraclass.h" />
     <ClInclude Include="Colorshaderclass.h" />
     <ClInclude Include="cpuclass.h" />
@@ -63,6 +62,7 @@
     <ClInclude Include="soundclass.h" />
     <ClInclude Include="SystemClass.h" />
     <ClInclude Include="terrainclass.h" />
+    <ClInclude Include="Terrainshaderclass.h" />
     <ClInclude Include="textclass.h" />
     <ClInclude Include="texturearrayclass.h" />
     <ClInclude Include="textureclass.h" />

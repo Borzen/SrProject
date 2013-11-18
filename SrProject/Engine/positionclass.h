@@ -25,10 +25,16 @@ public:
 	void TurnRight(bool);
 	void LookUpward(bool);
 	void LookDownward(bool);
+	void MoveLeft(bool);
+	void MoveRight(bool);
+
+	bool GetFallState();
+	bool GetJumpState();
 
 private:
 	float m_positionX, m_positionY, m_positionZ;
 	float m_rotationX, m_rotationY, m_rotationZ;
+	float intPosY;
 
 	float m_frameTime;
 
@@ -36,6 +42,9 @@ private:
 	float m_upwardSpeed, m_downwardSpeed;
 	float m_leftTurnSpeed, m_rightTurnSpeed;
 	float m_lookUpSpeed, m_lookDownSpeed;
+
+	bool isjumping;
+	bool isFalling;
 };
 
 #endif

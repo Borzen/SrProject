@@ -10,7 +10,7 @@
 //////////////
 #include <d3d11.h>
 #include <d3dx10math.h>
-
+#include <vector>
 #include <fstream>
 using namespace std;
 
@@ -57,14 +57,16 @@ public:
 	ModelClass(const ModelClass&);
 	~ModelClass();
 
-	bool Initialize(ID3D11Device*,WCHAR*,bool);
-	bool Initialize(ID3D11Device*, char*, WCHAR*,bool);
-	bool Initialize(ID3D11Device*, char*, WCHAR*, WCHAR*,bool);
+	bool Initialize(ID3D11Device*,WCHAR*,bool, D3DXVECTOR3);
+	bool Initialize(ID3D11Device*, char*, WCHAR*,bool, D3DXVECTOR3);
+	bool Initialize(ID3D11Device*, char*, WCHAR*, WCHAR*,bool, D3DXVECTOR3);
 	void Shutdown();
 	void Render(ID3D11DeviceContext*);
 
-	void SetInstance(int, D3DXVECTOR3*);
+	void SetInstance(int, vector<D3DXVECTOR3>);
 	bool instanceRender();
+
+	bool updateBuffers(ID3D11Device*, D3DXVECTOR3);
 
 	int GetIndexCount();
 	int GetVertexCount();
@@ -74,7 +76,7 @@ public:
 
 
 private:
-	bool InitializeBuffers(ID3D11Device*);
+	bool InitializeBuffers(ID3D11Device*, D3DXVECTOR3);
 	void ShutdownBuffers();
 	void RenderBuffers(ID3D11DeviceContext*);
 
@@ -95,7 +97,7 @@ private:
 	ModelType* m_model;
 	InstancePos* m_instancePos;
 	bool isInstance, fromFile;
-	D3DXMATRIX pos;
+	vector<D3DXVECTOR3> instancePos;
 };
 
 #endif

@@ -234,7 +234,6 @@ bool InputClass::IsLeftPressed()
 	return false;
 }
 
-
 bool InputClass::IsRightPressed()
 {
 	// Do a bitwise and on the keyboard state to check if the key is currently being pressed.
@@ -246,7 +245,6 @@ bool InputClass::IsRightPressed()
 	return false;
 }
 
-
 bool InputClass::IsUpPressed()
 {
 	// Do a bitwise and on the keyboard state to check if the key is currently being pressed.
@@ -257,7 +255,6 @@ bool InputClass::IsUpPressed()
 
 	return false;
 }
-
 
 bool InputClass::IsDownPressed()
 {

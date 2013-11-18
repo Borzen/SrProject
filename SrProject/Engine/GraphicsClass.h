@@ -20,6 +20,17 @@
 #include "lightmapshaderclass.h"
 #include "textureshaderclass.h"
 #include "scenegraph.h"
+#include "InputClass.h"
+#include "timerclass.h"
+#include "cpuclass.h"
+#include "fpsclass.h"
+#include "positionclass.h"
+#include "Colorshaderclass.h"
+#include "Terrainshaderclass.h"
+#include "fontshaderclass.h"
+#include <vector>
+
+using namespace std;
 
 /////////////
 // GLOBALS //
@@ -40,10 +51,11 @@ public:
 	GraphicsClass(const GraphicsClass&);
 	~GraphicsClass();
 
-	bool Initialize(int, int, HWND);
+	bool Initialize(int, int, HWND, HINSTANCE);
 	void Shutdown();
-	bool Frame(float, int, int, float);
+	bool Frame();
 	bool Render();
+	bool HandleInput(float);
 
 private:
 	D3DClass* m_D3D;
@@ -58,6 +70,17 @@ private:
 	LightMapShaderClass* m_LightMapShader;
 	TextureShaderClass* m_TextureShader;
 	SceneGraph* m_SceneGraph;
+	InputClass* m_Input;
+	TimerClass* m_Timer;
+	FpsClass* m_Fps;
+	CpuClass* m_Cpu;
+	ColorShaderClass* m_ColorShader;
+	PositionClass* m_Position;
+	TerrainShaderClass* m_TerrainShader;
+
+	FontShaderClass* m_FontShader;
+
+	vector<int> ids;
 };
 
 #endif

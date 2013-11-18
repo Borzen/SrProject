@@ -12,6 +12,8 @@ PositionClass::PositionClass()
 
 	m_frameTime = 0.0f;
 
+	intPosY = -1;
+
 	m_forwardSpeed   = 0.0f;
 	m_backwardSpeed  = 0.0f;
 	m_upwardSpeed    = 0.0f;
@@ -20,6 +22,9 @@ PositionClass::PositionClass()
 	m_rightTurnSpeed = 0.0f;
 	m_lookUpSpeed    = 0.0f;
 	m_lookDownSpeed  = 0.0f;
+
+	isjumping = false;
+	isFalling = false;
 }
 
 
@@ -40,7 +45,6 @@ void PositionClass::SetPosition(float x, float y, float z)
 	return;
 }
 
-
 void PositionClass::SetRotation(float x, float y, float z)
 {
 	m_rotationX = x;
@@ -56,7 +60,6 @@ void PositionClass::GetPosition(float& x, float& y, float& z)
 	z = m_positionZ;
 	return;
 }
-
 
 void PositionClass::GetRotation(float& x, float& y, float& z)
 {
@@ -74,79 +77,35 @@ void PositionClass::SetFrameTime(float time)
 
 void PositionClass::MoveForward(bool keydown)
 {
-	float radians;
 
 
-	// Update the forward speed movement based on the frame time and whether the user is holding the key down or not.
-	if(keydown)
-	{
-		m_forwardSpeed += m_frameTime * 0.001f;
-
-		if(m_forwardSpeed > (m_frameTime * 0.03f))
-		{
-			m_forwardSpeed = m_frameTime * 0.03f;
-		}
+	if(keydown){
+		m_positionX -= .05f;
+		m_positionZ -= 0;
 	}
-	else
-	{
-		m_forwardSpeed -= m_frameTime * 0.0007f;
-
-		if(m_forwardSpeed < 0.0f)
-		{
-			m_forwardSpeed = 0.0f;
-		}
-	}
-
-	// Convert degrees to radians.
-	radians = m_rotationY * 0.0174532925f;
-
-	// Update the position.
-	m_positionX += sinf(radians) * m_forwardSpeed;
-	m_positionZ += cosf(radians) * m_forwardSpeed;
 
 	return;
 }
 
 void PositionClass::MoveBackward(bool keydown)
 {
-	float radians;
-
-
-	// Update the backward speed movement based on the frame time and whether the user is holding the key down or not.
-	if(keydown)
-	{
-		m_backwardSpeed += m_frameTime * 0.001f;
-
-		if(m_backwardSpeed > (m_frameTime * 0.03f))
-		{
-			m_backwardSpeed = m_frameTime * 0.03f;
-		}
+	if(keydown){
+		m_positionX += .05f;
+		m_positionZ += 0;
 	}
-	else
-	{
-		m_backwardSpeed -= m_frameTime * 0.0007f;
-		
-		if(m_backwardSpeed < 0.0f)
-		{
-			m_backwardSpeed = 0.0f;
-		}
-	}
-
-	// Convert degrees to radians.
-	radians = m_rotationY * 0.0174532925f;
-
-	// Update the position.
-	m_positionX -= sinf(radians) * m_backwardSpeed;
-	m_positionZ -= cosf(radians) * m_backwardSpeed;
-
 	return;
 }
 
 void PositionClass::MoveUpward(bool keydown)
 {
 	// Update the upward speed movement based on the frame time and whether the user is holding the key down or not.
-	if(keydown)
+	if(keydown && !isjumping)
 	{
+		isjumping = true;
+		intPosY = m_positionY;
+	}
+	if(isjumping && intPosY >= 0){
+
 		m_upwardSpeed += m_frameTime * 0.003f;
 
 		if(m_upwardSpeed > (m_frameTime * 0.03f))
@@ -154,18 +113,13 @@ void PositionClass::MoveUpward(bool keydown)
 			m_upwardSpeed = m_frameTime * 0.03f;
 		}
 	}
-	else
-	{
-		m_upwardSpeed -= m_frameTime * 0.002f;
-
-		if(m_upwardSpeed < 0.0f)
-		{
-			m_upwardSpeed = 0.0f;
-		}
+	if(!isFalling && m_positionY >= intPosY + 10){
+		isjumping = false;
+		isFalling = true;
 	}
-
 	// Update the height position.
-	m_positionY += m_upwardSpeed;
+	if(isjumping)
+		m_positionY += m_upwardSpeed;
 
 	return;
 }
@@ -173,7 +127,7 @@ void PositionClass::MoveUpward(bool keydown)
 void PositionClass::MoveDownward(bool keydown)
 {
 	// Update the downward speed movement based on the frame time and whether the user is holding the key down or not.
-	if(keydown)
+	if(isFalling)
 	{
 		m_downwardSpeed += m_frameTime * 0.003f;
 
@@ -182,18 +136,14 @@ void PositionClass::MoveDownward(bool keydown)
 			m_downwardSpeed = m_frameTime * 0.03f;
 		}
 	}
-	else
-	{
-		m_downwardSpeed -= m_frameTime * 0.002f;
-
-		if(m_downwardSpeed < 0.0f)
-		{
-			m_downwardSpeed = 0.0f;
-		}
+	if(isFalling && m_positionY <= intPosY+1){
+		isFalling = false;
+		m_positionY = intPosY;
+		intPosY = -1;
 	}
-
 	// Update the height position.
-	m_positionY -= m_downwardSpeed;
+	if(isFalling && m_positionY > intPosY)
+		m_positionY -= m_downwardSpeed;
 
 	return;
 }
@@ -332,4 +282,14 @@ void PositionClass::LookDownward(bool keydown)
 	}
 
 	return;
+}
+
+bool PositionClass::GetFallState()
+{
+	return isFalling;
+}
+
+bool PositionClass::GetJumpState()
+{
+	return isjumping;
 }

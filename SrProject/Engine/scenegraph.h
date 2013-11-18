@@ -12,6 +12,10 @@
 #include <d3d11.h>
 #include <d3dx10math.h>
 #include "terrainclass.h"
+#include "Colorshaderclass.h"
+#include "Terrainshaderclass.h"
+#include "textclass.h"
+#include "fontshaderclass.h"
 using namespace std;
 
 class SceneGraph
@@ -20,7 +24,7 @@ class SceneGraph
 		SceneGraph();
 		SceneGraph(const SceneGraph&);
 		~SceneGraph();
-		bool Render(D3DClass*,TextureShaderClass*,LightShaderClass*,CameraClass*, LightClass*, ID3D11Buffer*);
+		bool Render(D3DClass*,TextureShaderClass*,LightShaderClass*,CameraClass*, LightClass*, ColorShaderClass*, TerrainShaderClass*, TextClass*, FontShaderClass*, ID3D11Buffer*);
 		void Destroy();
 		bool IsLoaded();
 		void ComputeInFrustumFlags(const D3DXMATRIX);
@@ -28,21 +32,32 @@ class SceneGraph
 		int Add(ID3D11Device*, char*, WCHAR*);
 		int Add(ID3D11Device*, char*, WCHAR*, float,float,float,float);
 		int Add(ID3D11Device*, char*, WCHAR*, float, float, float, float, float, float);
-		int AddTerrain(ID3D11Device*, WCHAR*);
+
+		int AddTerrain(ID3D11Device*, char*, WCHAR*);
+
 		void TranslateMesh(int, D3DXMATRIX&);
 		void SetMeshPosition(int, D3DXMATRIX&);
 		void SetMeshPosition(int,int,float,float,float);
 		void StartScene(D3DXMATRIX,float);
 
-		int AddMeshInstance(ID3D11Device*, char*);
-		int AddInstance(int, float, float, float, float, float, float);
+		void updatePos(int, ID3D11Device*,float,float,float);
+		void updatePos(int, ID3D11Device*,D3DXVECTOR3);
+
+		void AddInstancePos(int, float,float,float);
+		void AddInstancePos(int, D3DXVECTOR3);
+		int AddInstance(ID3D11Device*, char*, WCHAR*, vector<D3DXVECTOR3>);
+		int AddInstance(char*,WCHAR*);
+		bool InitInstance(int,ID3D11Device*,D3DXVECTOR3);
 		int AddInstance(int, float, float, float, float);
 		int AddInstance(int);
 
 private:
 	vector<ModelClass*> meshList;
-	TerrainClass terrain;
+	TerrainClass* terrain;
 	vector<D3DXVECTOR3> positions;
+	vector<D3DXVECTOR3> instancePos;
+	vector<char*> instanceFN;
+	vector<WCHAR*> instanceTX;
 	float _sceneScaling;
 	D3DXMATRIX _worldMatrix;
 };

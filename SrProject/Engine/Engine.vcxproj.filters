@@ -126,11 +126,11 @@
     <ClCompile Include="terrainclass.cpp">
       <Filter>Engine\Graphics Classes\Terrain</Filter>
     </ClCompile>
-    <ClCompile Include="applicationclass.cpp">
-      <Filter>Engine\System Stuff</Filter>
-    </ClCompile>
     <ClCompile Include="scenegraph.cpp">
       <Filter>Engine\Graphics Classes\SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrainshader.cpp">
+      <Filter>Engine\Graphics Classes\Terrain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -209,11 +209,11 @@
     <ClInclude Include="terrainclass.h">
       <Filter>Engine\Graphics Classes\Terrain</Filter>
     </ClInclude>
-    <ClInclude Include="applicationclass.h">
-      <Filter>Engine\System Stuff</Filter>
-    </ClInclude>
     <ClInclude Include="scenegraph.h">
       <Filter>Engine\Graphics Classes\SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrainshaderclass.h">
+      <Filter>Engine\Graphics Classes\Terrain</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

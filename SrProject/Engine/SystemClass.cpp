@@ -57,7 +57,7 @@ bool SystemClass::Initialize()
 	}
 
 	// Initialize the graphics object.
-	result = m_Graphics->Initialize(screenWidth, screenHeight, m_hwnd);
+	result = m_Graphics->Initialize(screenWidth, screenHeight, m_hwnd, m_hinstance);
 	if(!result)
 	{
 		return false;
@@ -265,7 +265,7 @@ bool SystemClass::Frame()
 	// Do the frame processing for the graphics object.
 
 
-	result = m_Graphics->Frame(rotationY, m_Fps->GetFps(), m_Cpu->GetCpuPercentage(), m_Timer->GetTime());
+	result = m_Graphics->Frame();
 	if(!result)
 	{
 		return false;
