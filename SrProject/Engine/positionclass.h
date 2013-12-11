@@ -2,6 +2,7 @@
 #define _POSITIONCLASS_H_
 
 #include <math.h>
+
 class PositionClass
 {
 public:
@@ -28,12 +29,18 @@ public:
 	void MoveLeft(bool);
 	void MoveRight(bool);
 
+	void RevertPos();
+	void SetRevert();
+
+	void SetFall();
+
 	bool GetFallState();
 	bool GetJumpState();
 
 private:
 	float m_positionX, m_positionY, m_positionZ;
 	float m_rotationX, m_rotationY, m_rotationZ;
+	float m_X,m_Y,m_Z;
 	float intPosY;
 
 	float m_frameTime;

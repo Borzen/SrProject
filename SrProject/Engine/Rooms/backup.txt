@@ -1,0 +1,21 @@
+int id;
+	id = m_SceneGraph->Add(m_D3D->GetDevice(),"../Engine/Models/sphere.txt", L"../Engine/Textures/seafloor.dds",1,2,1,0);
+	if(id == -1){
+		MessageBox(hwnd, L"Could not initialize sphere model", L"Error", MB_OK);
+		return false;
+	}
+	ids.push_back(id);
+
+	id = m_SceneGraph->AddInstance("../Engine/Models/cube.txt",L"../Engine/Textures/seafloor.dds");
+	int i;
+	for(i = 0; i < 100; i++)
+	{
+		m_SceneGraph->AddInstancePos(id,i,0,0);
+	}
+	m_SceneGraph->InitInstance(id,m_D3D->GetDevice(),D3DXVECTOR3(0,0,0));
+
+	id = m_SceneGraph->AddTerrain(m_D3D->GetDevice(),"../Engine/HeightMaps/heightmap01.bmp", L"../Engine/Textures/dirt01.dds");
+	if(id == -1){
+		MessageBox(hwnd, L"Could not initialize terrain model", L"Error", MB_OK);
+		return false;
+	}

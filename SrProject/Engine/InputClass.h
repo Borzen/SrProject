@@ -31,10 +31,7 @@ public:
 	bool IsRightPressed();
 	bool IsUpPressed();
 	bool IsDownPressed();
-	bool IsAPressed();
-	bool IsZPressed();
-	bool IsPgUpPressed();
-	bool IsPgDownPressed();
+	bool IsSpacePressed();
 	void GetMouseLocation(int&,int&);
 
 private:

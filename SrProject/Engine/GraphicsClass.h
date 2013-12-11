@@ -28,7 +28,9 @@
 #include "Colorshaderclass.h"
 #include "Terrainshaderclass.h"
 #include "fontshaderclass.h"
+#include "quadtreeclass.h"
 #include <vector>
+#include "roomparser.h"
 
 using namespace std;
 
@@ -77,8 +79,9 @@ private:
 	ColorShaderClass* m_ColorShader;
 	PositionClass* m_Position;
 	TerrainShaderClass* m_TerrainShader;
-
+	QuadTreeClass* m_QuadTree;
 	FontShaderClass* m_FontShader;
+	RoomParse* m_RP;
 
 	vector<int> ids;
 };

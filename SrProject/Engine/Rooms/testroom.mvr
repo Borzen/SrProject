@@ -1,0 +1,7 @@
+playermodel(../Engine/Models/sphere.txt,../Engine/Textures/seafloor.dds,1,2,1,0)
+Imodel(../Engine/Models/cube.txt,../Engine/Textures/stone.dds)
+Ifor(i,0,0,100)
+Ipos(1,1,1)
+II(0,0,0)
+terrain(../Engine/HeightMaps/heightmap01.bmp,../Engine/Textures/dirt01.dds)
+eol

@@ -26,6 +26,26 @@ ModelClass::~ModelClass()
 {
 }
 
+bool ModelClass::Initialize(ID3D11Device* device, char* file, bool isI, D3DXVECTOR3 pos)
+{
+	bool result;
+	isInstance = isI;
+	fromFile = true;
+	result = LoadModel(file);
+	if(!result)
+	{
+		return false;
+	}
+	result = InitializeBuffers(device,pos);
+	if(!result)
+	{
+		return false;
+	}
+
+	return true;
+
+}
+
 bool ModelClass::Initialize(ID3D11Device* device, WCHAR* textureFilename, bool isI, D3DXVECTOR3 pos)
 {
 	bool result;

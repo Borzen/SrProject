@@ -46,6 +46,9 @@
     <Filter Include="Engine\Diag Classes">
       <UniqueIdentifier>{8d951033-6172-4a43-aa72-1af711e7a87e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Colliders">
+      <UniqueIdentifier>{cee9c1c3-1042-4b56-b0b4-8baf7b927ef2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputClass.cpp">
@@ -132,6 +135,15 @@
     <ClCompile Include="Terrainshader.cpp">
       <Filter>Engine\Graphics Classes\Terrain</Filter>
     </ClCompile>
+    <ClCompile Include="quadtreeclass.cpp">
+      <Filter>Engine\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="roomparser.cpp">
+      <Filter>Engine\System Stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="2dcolliderclass.cpp">
+      <Filter>Engine\Colliders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InputClass.h">
@@ -214,6 +226,15 @@
     </ClInclude>
     <ClInclude Include="Terrainshaderclass.h">
       <Filter>Engine\Graphics Classes\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="quadtreeclass.h">
+      <Filter>Engine\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="roomparser.h">
+      <Filter>Engine\System Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="2dcolliderclass.h">
+      <Filter>Engine\Colliders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

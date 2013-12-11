@@ -1,3 +1,6 @@
+////////////////////////////////////////////////////////////////////////////////
+// Filename: frustumclass.cpp
+////////////////////////////////////////////////////////////////////////////////
 #include "frustumclass.h"
 
 
@@ -14,6 +17,7 @@ FrustumClass::FrustumClass(const FrustumClass& other)
 FrustumClass::~FrustumClass()
 {
 }
+
 
 void FrustumClass::ConstructFrustum(float screenDepth, D3DXMATRIX projectionMatrix, D3DXMATRIX viewMatrix)
 {
@@ -75,6 +79,7 @@ void FrustumClass::ConstructFrustum(float screenDepth, D3DXMATRIX projectionMatr
 	return;
 }
 
+
 bool FrustumClass::CheckPoint(float x, float y, float z)
 {
 	int i;
@@ -91,6 +96,7 @@ bool FrustumClass::CheckPoint(float x, float y, float z)
 
 	return true;
 }
+
 
 bool FrustumClass::CheckCube(float xCenter, float yCenter, float zCenter, float radius)
 {
@@ -146,6 +152,7 @@ bool FrustumClass::CheckCube(float xCenter, float yCenter, float zCenter, float 
 	return true;
 }
 
+
 bool FrustumClass::CheckSphere(float xCenter, float yCenter, float zCenter, float radius)
 {
 	int i;
@@ -162,6 +169,7 @@ bool FrustumClass::CheckSphere(float xCenter, float yCenter, float zCenter, floa
 
 	return true;
 }
+
 
 bool FrustumClass::CheckRectangle(float xCenter, float yCenter, float zCenter, float xSize, float ySize, float zSize)
 {

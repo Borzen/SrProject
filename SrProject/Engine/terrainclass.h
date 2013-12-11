@@ -4,7 +4,10 @@
 #include <d3d11.h>
 #include <d3dx10math.h>
 #include <stdio.h>
+#include <vector>
 #include "textureclass.h"
+
+using namespace std;
 
 const int TEXTURE_REPEAT = 8;
 
@@ -38,6 +41,13 @@ class TerrainClass
 		void Render(ID3D11DeviceContext*);
 
 		int GetIndexCount();
+		int GetVertexCount();
+		void CopyVertexArray(void*);
+
+		vector<D3DXVECTOR3> GetHM();
+
+		int GetWidth();
+		int GetHeight();
 
 		ID3D11ShaderResourceView* GetTexture();
 
@@ -53,7 +63,7 @@ class TerrainClass
 		bool LoadTexture(ID3D11Device*, WCHAR*);
 		void ReleaseTexture();
 
-		bool InitalizeBuffers(ID3D11Device*);
+		bool InitializeBuffers(ID3D11Device*);
 		void ShutdownBuffers();
 		void RenderBuffers(ID3D11DeviceContext*);
 		
@@ -62,7 +72,10 @@ class TerrainClass
 		int m_vertexCount, m_indexCount;
 		ID3D11Buffer *m_vertexBuffer, *m_indexBuffer;
 
+		vector<D3DXVECTOR3> hm;
+
 		HeightMapType* m_heightMap;
 		TextureClass* m_Texture;
+		VertexType* m_vertices;
 };
 #endif

@@ -56,7 +56,8 @@ public:
 	ModelClass();
 	ModelClass(const ModelClass&);
 	~ModelClass();
-
+	
+	bool Initialize(ID3D11Device*,char*, bool, D3DXVECTOR3);
 	bool Initialize(ID3D11Device*,WCHAR*,bool, D3DXVECTOR3);
 	bool Initialize(ID3D11Device*, char*, WCHAR*,bool, D3DXVECTOR3);
 	bool Initialize(ID3D11Device*, char*, WCHAR*, WCHAR*,bool, D3DXVECTOR3);

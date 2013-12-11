@@ -23,6 +23,8 @@ PositionClass::PositionClass()
 	m_lookUpSpeed    = 0.0f;
 	m_lookDownSpeed  = 0.0f;
 
+	m_X,m_Y,m_Z = 0.0f;
+
 	isjumping = false;
 	isFalling = false;
 }
@@ -79,9 +81,9 @@ void PositionClass::MoveForward(bool keydown)
 {
 
 
-	if(keydown){
-		m_positionX -= .05f;
-		m_positionZ -= 0;
+	if(keydown && m_positionX+.25f < 256){
+		m_positionX += .25f;
+		m_positionZ += 0;
 	}
 
 	return;
@@ -89,9 +91,9 @@ void PositionClass::MoveForward(bool keydown)
 
 void PositionClass::MoveBackward(bool keydown)
 {
-	if(keydown){
-		m_positionX += .05f;
-		m_positionZ += 0;
+	if(keydown && (m_positionX-.25f >= 0)){
+		m_positionX -= .25f;
+		m_positionZ -= 0;
 	}
 	return;
 }
@@ -292,4 +294,35 @@ bool PositionClass::GetFallState()
 bool PositionClass::GetJumpState()
 {
 	return isjumping;
+}
+
+void PositionClass::SetRevert()
+{
+	m_X = m_positionX;
+	m_Y = m_positionY;
+	m_Z = m_positionZ;
+}
+
+void PositionClass::RevertPos()
+{
+	m_positionX = m_X;
+	m_positionY = m_Y;
+	m_positionZ = m_Z;
+	if(isFalling)
+	{
+		isFalling = false;
+	}
+	if(isjumping)
+	{
+		isjumping = false;
+	}
+}
+
+void PositionClass::SetFall()
+{
+	if(m_positionY > 1 && !isjumping)
+	{
+		isFalling = true;
+		intPosY = 1;
+	}
 }

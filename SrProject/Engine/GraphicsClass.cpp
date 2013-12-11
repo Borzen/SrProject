@@ -8,7 +8,7 @@ GraphicsClass::GraphicsClass()
 {
 	m_D3D = 0;
 	m_Camera = 0;
-	m_SceneGraph = new SceneGraph;
+	m_SceneGraph = 0;
 	m_LightShader = 0;
 	m_Light = 0;
 	m_ModelList = 0;
@@ -24,18 +24,17 @@ GraphicsClass::GraphicsClass()
 	m_ColorShader = 0;
 	m_TerrainShader = 0;
 	m_FontShader = 0;
+	m_QuadTree = 0;
+	m_RP = 0;
 }
-
 
 GraphicsClass::GraphicsClass(const GraphicsClass& other)
 {
 }
 
-
 GraphicsClass::~GraphicsClass()
 {
 }
-
 
 bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd, HINSTANCE hinstance)
 {
@@ -132,32 +131,6 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd, HIN
 	m_Camera->Render();
 	m_Camera->GetViewMatrix(baseViewMatrix);
 	
-	
-	//m_Model->SetInstance(5,NULL);
-	int id = m_SceneGraph->Add(m_D3D->GetDevice(),"../Engine/Models/cube.txt", L"../Engine/Textures/seafloor.dds",0,0,0,0);
-	if(id == -1){
-		MessageBox(hwnd, L"Could not initialize cube model", L"Error", MB_OK);
-		return false;
-	}
-	ids.push_back(id);
-
-	id = m_SceneGraph->Add(m_D3D->GetDevice(),"../Engine/Models/sphere.txt", L"../Engine/Textures/seafloor.dds",1,2,1,0);
-	if(id == -1){
-		MessageBox(hwnd, L"Could not initialize sphere model", L"Error", MB_OK);
-		return false;
-	}
-	ids.push_back(id);
-
-	id = m_SceneGraph->AddInstance("../Engine/Models/triangle.txt",L"../Engine/Textures/seafloor.dds");
-	m_SceneGraph->AddInstancePos(id,2,2,2);
-	m_SceneGraph->AddInstancePos(id,1.5f,1.5f,1.5f);
-	m_SceneGraph->InitInstance(id,m_D3D->GetDevice(),D3DXVECTOR3(0,0,0));
-
-	id = m_SceneGraph->AddTerrain(m_D3D->GetDevice(),"../Engine/HeightMaps/heightmap01.bmp", L"../Engine/Textures/dirt01.dds");
-	if(id == -1){
-		MessageBox(hwnd, L"Could not initialize terrain model", L"Error", MB_OK);
-		return false;
-	}
 	// Create the multitexture shader object.
 	m_MultiTextureShader = new MultiTextureShaderClass;
 	if(!m_MultiTextureShader)
@@ -214,6 +187,81 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd, HIN
 	if(!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model list object.", L"Error", MB_OK);
+		return false;
+	}
+
+	m_SceneGraph = new SceneGraph;
+	if(!m_SceneGraph)
+	{
+		return false;
+	}
+
+	result = m_SceneGraph->Initilize();
+	if(!result)
+	{
+		return false;
+	}
+
+	int id;
+	id = m_SceneGraph->Add(m_D3D->GetDevice(),"../Engine/Models/sphere.txt", L"../Engine/Textures/balltxt.dds",1,1,1,0);
+	if(id == -1){
+		MessageBox(hwnd, L"Could not initialize sphere model", L"Error", MB_OK);
+		return false;
+	}
+	ids.push_back(id);
+
+	id = m_SceneGraph->Add(m_D3D->GetDevice(),"../Engine/Models/cube.txt",L"../Engine/Textures/seafloor.dds",3,1,1,0);
+	if(id == -1){
+		MessageBox(hwnd, L"Could not initialize cube model", L"Error", MB_OK);
+		return false;
+	}
+	ids.push_back(id);
+	
+	id = m_SceneGraph->Add(m_D3D->GetDevice(),"../Engine/Models/cube.txt",L"../Engine/Textures/seafloor.dds",5,3,1,0);
+	if(id == -1){
+		MessageBox(hwnd, L"Could not initialize cube model", L"Error", MB_OK);
+		return false;
+	}
+	ids.push_back(id);
+
+	id = m_SceneGraph->Add(m_D3D->GetDevice(),"../Engine/Models/cube.txt",L"../Engine/Textures/seafloor.dds",7,5,1,0);
+	if(id == -1){
+		MessageBox(hwnd, L"Could not initialize cube model", L"Error", MB_OK);
+		return false;
+	}
+	ids.push_back(id);
+	
+
+	int i;
+
+	id = m_SceneGraph->AddInstance("../Engine/Models/cube.txt",L"../Engine/Textures/stone01.dds");
+	for(i = 0; i < 256; i++)
+	{
+		m_SceneGraph->AddInstancePos(id,i,-0.95f,-0.25f);
+		i++;
+	}
+	
+	result = m_SceneGraph->InitInstance(id,m_D3D->GetDevice(),D3DXVECTOR3(0,0,0));
+	if(!result){
+		MessageBox(hwnd, L"Could not initialize cube instances", L"Error", MB_OK);
+		return false;
+	}
+	id = m_SceneGraph->AddInstance("../Engine/Models/cube.txt",L"../Engine/Textures/seafloor.dds");
+	for(i = 2; i < 256; i++)
+	{
+		m_SceneGraph->AddInstancePos(id,0,-0.95f,i);
+		i++;
+	}
+	
+	result = m_SceneGraph->InitInstance(id,m_D3D->GetDevice(),D3DXVECTOR3(0,0,0));
+	if(!result){
+		MessageBox(hwnd, L"Could not initialize cube instances", L"Error", MB_OK);
+		return false;
+	}
+
+	id = m_SceneGraph->AddTerrain(m_D3D->GetDevice(),"../Engine/HeightMaps/testHM2.bmp", L"../Engine/Textures/dirt01.dds");
+	if(id == -1){
+		MessageBox(hwnd, L"Could not initialize terrain model", L"Error", MB_OK);
 		return false;
 	}
 
@@ -312,11 +360,36 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd, HIN
 		return false;
 	}
 
+		// Create the quad tree object.
+	m_QuadTree = new QuadTreeClass;
+	if(!m_QuadTree)
+	{
+		return false;
+	}
+
+	// Initialize the quad tree object.
+	result = m_QuadTree->Initialize(m_SceneGraph->GetTerrain(), m_D3D->GetDevice());
+	if(!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the quad tree object.", L"Error", MB_OK);
+		return false;
+	}
+
+
+
 	return true;
 }
 
 void GraphicsClass::Shutdown()
 {
+
+	// Release the quad tree object.
+	if(m_QuadTree)
+	{
+		m_QuadTree->Shutdown();
+		delete m_QuadTree;
+		m_QuadTree = 0;
+	}
 
 	if(m_FontShader)
 	{
@@ -444,7 +517,9 @@ void GraphicsClass::Shutdown()
 
 	if(m_SceneGraph)
 	{
+		m_SceneGraph->Shutdown();
 		delete m_SceneGraph;
+		m_SceneGraph = 0;
 	}
 	// Release the camera object.
 	if(m_Camera)
@@ -467,6 +542,9 @@ void GraphicsClass::Shutdown()
 bool GraphicsClass::Frame()
 {
 	bool result;
+	D3DXVECTOR3 position;
+	float height;
+
 	result = m_Input->Frame();
 	if(!result)
 	{
@@ -490,6 +568,7 @@ bool GraphicsClass::Frame()
 		return false;
 	}
 
+
 	// Render the graphics.
 	result = Render();
 	if(!result)
@@ -502,7 +581,7 @@ bool GraphicsClass::Frame()
 
 bool GraphicsClass::Render()
 {
-	return m_SceneGraph->Render(m_D3D,m_TextureShader,m_LightShader,m_Camera,m_Light,m_ColorShader,m_TerrainShader,m_Text,m_FontShader, NULL);
+	return m_SceneGraph->Render(m_D3D,m_TextureShader,m_LightShader,m_Camera,m_Light,m_ColorShader,m_TerrainShader,m_Text,m_FontShader,m_Frustum, m_QuadTree, SCREEN_DEPTH, NULL);
 }
 
 bool GraphicsClass::HandleInput(float frameTime)
@@ -510,34 +589,46 @@ bool GraphicsClass::HandleInput(float frameTime)
 	bool keyDown, result;
 	float posX, posY, posZ, rotX, rotY, rotZ;
 
+	m_Position->SetRevert();
+
 	m_Position->SetFrameTime(frameTime);
 
-	keyDown = m_Input->IsLeftPressed();
+	keyDown = m_Input->IsRightPressed();
 	m_Position->MoveForward(keyDown);
 
-	keyDown = m_Input->IsRightPressed();
+	keyDown = m_Input->IsLeftPressed();
 	m_Position->MoveBackward(keyDown);
 
 	if(!m_Position->GetJumpState() && !m_Position->GetFallState())
-		keyDown = m_Input->IsAPressed();
+	{
+		keyDown = m_Input->IsSpacePressed();
+		m_Position->MoveUpward(keyDown);
+	}
 	
-	m_Position->MoveUpward(keyDown);
+	if(m_Position->GetJumpState())
+	{
+		m_Position->MoveUpward(keyDown);
+	}
 
 	if(m_Position->GetFallState())
-	m_Position->MoveDownward(keyDown);
-
-	keyDown = m_Input->IsPgUpPressed();
-	m_Position->LookUpward(keyDown);
-
-	keyDown = m_Input->IsPgDownPressed();
-	m_Position->LookDownward(keyDown);
+		m_Position->MoveDownward(keyDown);
+	
 
 	m_Position->GetPosition(posX, posY, posZ);
 	m_Position->GetRotation(rotX, rotY, rotZ);
 
+	if(m_SceneGraph->ShouldFall(1,posX,posY-1, posZ) && !m_Position->GetFallState())
+		m_Position->SetFall();
 	// Set the position of the camera.
-	m_SceneGraph->updatePos(1,m_D3D->GetDevice(),posX,posY,posZ);
-	m_Camera->SetPosition(posX,posY,posZ-10.0f);
+	bool r = m_SceneGraph->updatePos(1,m_D3D->GetDevice(),posX,posY,posZ);
+	if(r)
+	{
+		m_Camera->SetPosition(posX,posY,posZ-10.0f);
+	}
+	else
+	{
+		m_Position->RevertPos();
+	}
 
 	result = m_Text->SetCameraPosition(posX, posY, posZ, m_D3D->GetDeviceContext());
 	if(!result)

@@ -16,6 +16,10 @@
 #include "Terrainshaderclass.h"
 #include "textclass.h"
 #include "fontshaderclass.h"
+#include "frustumclass.h"
+#include "quadtreeclass.h"
+#include "2dcolliderclass.h"
+
 using namespace std;
 
 class SceneGraph
@@ -24,7 +28,10 @@ class SceneGraph
 		SceneGraph();
 		SceneGraph(const SceneGraph&);
 		~SceneGraph();
-		bool Render(D3DClass*,TextureShaderClass*,LightShaderClass*,CameraClass*, LightClass*, ColorShaderClass*, TerrainShaderClass*, TextClass*, FontShaderClass*, ID3D11Buffer*);
+		bool Initilize(void);
+		void Shutdown(void);
+
+		bool Render(D3DClass*,TextureShaderClass*,LightShaderClass*,CameraClass*, LightClass*, ColorShaderClass*, TerrainShaderClass*, TextClass*, FontShaderClass*, FrustumClass*, QuadTreeClass*, float, ID3D11Buffer*);
 		void Destroy();
 		bool IsLoaded();
 		void ComputeInFrustumFlags(const D3DXMATRIX);
@@ -40,8 +47,8 @@ class SceneGraph
 		void SetMeshPosition(int,int,float,float,float);
 		void StartScene(D3DXMATRIX,float);
 
-		void updatePos(int, ID3D11Device*,float,float,float);
-		void updatePos(int, ID3D11Device*,D3DXVECTOR3);
+		bool updatePos(int, ID3D11Device*,float,float,float);
+		bool updatePos(int, ID3D11Device*,D3DXVECTOR3);
 
 		void AddInstancePos(int, float,float,float);
 		void AddInstancePos(int, D3DXVECTOR3);
@@ -51,15 +58,29 @@ class SceneGraph
 		int AddInstance(int, float, float, float, float);
 		int AddInstance(int);
 
+		int AddCollidorSquare(ID3D11Device*, char*,float,float,float);
+		int AddCollidorSquare(ID3D11Device*, char*,D3DXVECTOR3);
+		bool UpdateCollider(int,float,float,float);
+		bool UpdateCollider(int,D3DXVECTOR3);
+
+		void AddColliderHeight();
+
+		bool ShouldFall(int,float,float,float);
+
+		D3DXVECTOR3 GetPosition(int);
+
+		TerrainClass* GetTerrain();
+
 private:
+	vector<ModelClass*> colliderList;
 	vector<ModelClass*> meshList;
 	TerrainClass* terrain;
 	vector<D3DXVECTOR3> positions;
-	vector<D3DXVECTOR3> instancePos;
-	vector<char*> instanceFN;
-	vector<WCHAR*> instanceTX;
-	float _sceneScaling;
-	D3DXMATRIX _worldMatrix;
+	vector<D3DXVECTOR3> colliderPos;
+	vector<D3DXVECTOR4> m_InstancePos;
+	vector<char*> m_instanceFN;
+	vector<WCHAR*> m_instanceTX;
+	Collider2D* c2d;
 };
 
 #endif
